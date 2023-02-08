@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Home() {
   return (
-   <>
+   <main className='principal'>
    <h2>Ultimos Lançamentos</h2>
    <div className="card">
     <div className="thumb">
@@ -23,6 +23,6 @@ export default function Home() {
         <a href="#">Leia mais &gt;</a>
     </div>
    </div>
-   </>
+   </main>
   );
 };
