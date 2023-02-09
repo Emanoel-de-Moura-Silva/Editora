@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Topo from "./components/Topo";
 import Home from "./components/Home";
 import Catalogo from './components/Catalogo';
@@ -9,29 +9,70 @@ import Frontend from "./components/Frontend";
 import Design from './components/Design';
 import Programação from "./components/Programação";
 import './index.css';
+import Livro from './components/Livro'
+import axios from 'axios'
 
 class App extends Component {
+  state = {
+    livros: [],
+  };
+  async componentDidMount() {
+    try {
+      const { data: livros } = await axios.get("/api/todosOsLivros.json");
+      this.setState({ livros });
+    } catch (error) {
+      console.log(error);
+      document
+        .querySelectorAll(".principal")[0]
+        .insertAdjacentHTML(
+          "beforeend",
+          "<p class='erro'>Mensagem de erro</p>"
+        );
+    }
+  }
   render() {
     return (
       <Router>
-      <>
         <Topo />
-        <Switch>
-          {/**
-           * O componente Route que define as rotas e admite os atributos exact, que torna o unico o destino do link, e o atributo render, que aponta para o componente a ser renderizado
-           */}
-          <Route exact path="/" render={Home}/>
-          {/**
-           * O atributo render admite, também, uma sintaxe em forma de arrow function cujo retorno é o componente a renderizar. Usa-se essa sintexe quando é necessario passar props para os componentes. È o caso dos componentes Frontend, Programção, Design e Catalogo.
-           */}
-          <Route exact path="/frontend" render={() => <Frontend/>} />
-          <Route exact path="/progamacao" render={() => <Programação/>} />
-          <Route exact path="/design" render={() => <Design/>} />
-          <Route exact path="/catalogo" render={() => <Catalogo/>} />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            render={() => <Home livros={this.state.livros} />}
+          />
+          <Route
+            exact
+            path="/frontend"
+            render={() => <Frontend livros={this.state.livros} />}
+          />
+          <Route
+            exact
+            path="/programacao"
+            render={() => <Programação livros={this.state.livros} />}
+          />
+          <Route
+            exact
+            path="/design"
+            render={() => <Design livros={this.state.livros} />}
+          />
+          <Route
+            exact
+            path="/catalogo"
+            render={() => <Catalogo livros={this.state.livros} />}
+          />
+          <Route
+            path="/livro/:livroSlug"
+            render={(props) => {
+              const livro = this.state.livros.find(
+                (livro) => livro.slug === props.match.params.livroSlug
+              );
+              if (livro) return <Livro livro={livro} />;
+              else return <NotFound />;
+            }}
+          />
           <Route component={NotFound} />
-        </Switch>
-      <Rodape />
-      </>
+        </Routes>
+        <Rodape />
       </Router>
     );
   }

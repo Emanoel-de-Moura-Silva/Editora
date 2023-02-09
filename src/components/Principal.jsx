@@ -1,10 +1,12 @@
-import React from 'react'
-import Home from "./Home"
+import React from "react";
+import Home from "./Home";
 
-export default function Principal() {
+const Principal = () => {
   return (
     <main className="principal">
-        <Home />
+      <Home />
     </main>
-  )
-}
+  );
+};
+
+export default Principal;

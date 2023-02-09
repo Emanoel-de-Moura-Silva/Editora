@@ -1,13 +1,14 @@
-import React from 'react'
-import Logo from './Logo'
-import Navegacao from './Navegacao'
+import React from "react";
+import Logo from "./Logo";
+import Navegacao from "./Navegacao";
 
-export default function Topo() {
+const Topo = () => {
   return (
     <header className="topo">
-        <Logo/>
-        <Navegacao/>
+      <Logo />
+      <Navegacao />
     </header>
-    
-  )
-}
+  );
+};
+
+export default Topo;

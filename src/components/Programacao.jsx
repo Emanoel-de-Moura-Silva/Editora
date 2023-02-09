@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Frontend = ({ livros }) => (
+const Programacao = ({ livros }) => (
   <main className="principal">
-    <h2>Categoria Frontend</h2>
+    <h2>Categoria Programacao</h2>
     {livros
-      .filter((cat) => cat.categoria === "frontend")
+      .filter((cat) => cat.categoria === "programacao")
       .map((livro) => (
         <div className="card" key={livro.id}>
           <div className="thumb">
@@ -34,4 +34,4 @@ const Frontend = ({ livros }) => (
   </main>
 );
 
-export default Frontend;
+export default Programacao;
